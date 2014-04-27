@@ -213,9 +213,9 @@ if (isset($_POST['submitandcreateafileformepleaseiamreadytoinstallyouradmintheme
         <title>Installing Silverstone Admin</title>
 
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />	
-        <meta name="author" content="installing tutlageadmin" />
-        <meta name="robots" content="installing tutlageadmin">
-        <meta name="description" content="installation page for tutlageadmin"/>
+        <meta name="author" content="installing silverstoneadmin" />
+        <meta name="robots" content="installing silverstoneadmin">
+        <meta name="description" content="installation page for silverstoneadmin"/>
         <meta name="keywords" content="installation" />
 
         <link rel="stylesheet" href="stylesheets/home.css" />
