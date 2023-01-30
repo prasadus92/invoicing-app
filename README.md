@@ -1,9 +1,9 @@
-#Web based Billing and Invoicing App
+## Invoicing App
 
 A PHP application for generating simple invoices in PDF format.
 
 
-##How to install:
+## How to install?
 
 1. Upload full project to your host (To \html directory).
 2. Create an empty MySQL database in control panel.
