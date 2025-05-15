@@ -1,0 +1,45 @@
+name: PHP CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        extensions: mbstring, intl, pdo_mysql
+        coverage: xdebug
+
+    - name: Install Dependencies
+      run: composer install --prefer-dist --no-progress
+
+    - name: Create .env file
+      run: |
+        cp .env.example .env
+        sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
+        sed -i 's/DB_DATABASE=.*/DB_DATABASE=invoicing_test/' .env
+        sed -i 's/DB_USERNAME=.*/DB_USERNAME=root/' .env
+        sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=/' .env
+
+    - name: Start MySQL
+      run: |
+        sudo systemctl start mysql
+        mysql -e 'CREATE DATABASE invoicing_test;'
+
+    - name: Run Tests
+      run: vendor/bin/phpunit
+
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }} 

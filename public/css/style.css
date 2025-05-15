@@ -1,0 +1,95 @@
+/* General Styles */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    margin-top: auto;
+}
+
+/* Form Styles */
+.form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Invoice Styles */
+.invoice-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.invoice-header {
+    border-bottom: 2px solid #eee;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.invoice-items {
+    margin: 20px 0;
+}
+
+.invoice-total {
+    border-top: 2px solid #eee;
+    margin-top: 20px;
+    padding-top: 20px;
+    text-align: right;
+}
+
+/* Table Styles */
+.table-responsive {
+    margin: 20px 0;
+}
+
+.table th {
+    background-color: #f8f9fa;
+}
+
+/* Button Styles */
+.btn-group-sm > .btn, .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+
+/* Alert Styles */
+.alert {
+    margin-bottom: 20px;
+}
+
+/* Card Styles */
+.card {
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #eee;
+}
+
+/* Navigation Styles */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-link {
+    padding: 0.5rem 1rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 10px;
+    }
+    
+    .invoice-container {
+        padding: 10px;
+    }
+} 

@@ -1,0 +1,38 @@
+# Dependencies
+/vendor/
+composer.lock
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# IDE files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+nbproject/
+
+# Logs
+*.log
+logs/
+
+# Cache
+*.cache
+cache/
+
+# Uploads directory
+/uploads/*
+!/uploads/.gitkeep
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Build files
+/build/
+/dist/
+
+# Configuration files with sensitive data
+config.php 
