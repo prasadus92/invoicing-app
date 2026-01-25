@@ -5,9 +5,9 @@
     unlink("stylesheets/home.css");
     header("location: index.php");
 } ?>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript">
-    function fuck() {
+    function deleteConfig() {
         if (window.XMLHttpRequest)
         {
             xmlhttp = new window.XMLHttpRequest();
@@ -86,12 +86,12 @@ if (isset($_POST['submitandcreateafileformepleaseiamreadytoinstallyouradmintheme
 		Unable to make database connection, delete config.php and try again with right credentials</p>';
 
 
-        $conn = mysql_connect($db_host, $db_user, $db_pass) or die();
-        $db = mysql_select_db($db_name, $conn);
+        try {
+            $conn = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        if (isset($conn)) {
-            $sql = mysql_query("CREATE TABLE invoices(
-				id INT NOT NULL AUTO_INCREMENT, 
+            $sql = $conn->exec("CREATE TABLE IF NOT EXISTS invoices(
+				id INT NOT NULL AUTO_INCREMENT,
 				PRIMARY KEY(id),
 				your_company_name VARCHAR(300),
 				your_street VARCHAR(300),
@@ -116,19 +116,19 @@ if (isset($_POST['submitandcreateafileformepleaseiamreadytoinstallyouradmintheme
 				invoice_paid varchar(50),
 				invoice_status varchar(70),
 				invoice_created_by varchar(200),
-				invoice_created_on varchar(50))");
+				invoice_created_on varchar(50)) ENGINE=InnoDB DEFAULT CHARSET=utf8");
 
-            $sql = mysql_query("CREATE TABLE invoice_items(
+            $sql = $conn->exec("CREATE TABLE IF NOT EXISTS invoice_items(
 				id INT NOT NULL AUTO_INCREMENT,
 				PRIMARY KEY(id),
 				item_description VARCHAR(300) NOT NULL,
 				quantity VARCHAR(20) NOT NULL,
 				unit_price VARCHAR(20) NOT NULL,
 				total VARCHAR(20) NOT NULL,
-				invoice_refrence_id VARCHAR(40))");
+				invoice_refrence_id VARCHAR(40)) ENGINE=InnoDB DEFAULT CHARSET=utf8");
 
-            $sql = mysql_query("CREATE TABLE users(
-				id INT NOT NULL AUTO_INCREMENT, 
+            $sql = $conn->exec("CREATE TABLE IF NOT EXISTS users(
+				id INT NOT NULL AUTO_INCREMENT,
 				PRIMARY KEY(id),
 				username VARCHAR(150),
 				email VARCHAR(150),
@@ -152,10 +152,10 @@ if (isset($_POST['submitandcreateafileformepleaseiamreadytoinstallyouradmintheme
 				company_street_address TEXT,
 				company_city varchar (250),
 				company_state varchar (250),
-				company_phone_no varchar (20))");
+				company_phone_no varchar (20)) ENGINE=InnoDB DEFAULT CHARSET=utf8");
 
-            $sql = mysql_query("CREATE TABLE clients(
-				id INT NOT NULL AUTO_INCREMENT, 
+            $sql = $conn->exec("CREATE TABLE IF NOT EXISTS clients(
+				id INT NOT NULL AUTO_INCREMENT,
 				PRIMARY KEY(id),
 				client_business_name VARCHAR(300),
 				client_tagline VARCHAR(300),
@@ -168,10 +168,10 @@ if (isset($_POST['submitandcreateafileformepleaseiamreadytoinstallyouradmintheme
 				client_address TEXT,
 				client_website varchar(250),
 				client_created_by varchar (150),
-				client_created_on_date varchar (50))");
+				client_created_on_date varchar (50)) ENGINE=InnoDB DEFAULT CHARSET=utf8");
 
-            $sql = mysql_query("CREATE TABLE invoice_emails(
-				id INT NOT NULL AUTO_INCREMENT, 
+            $sql = $conn->exec("CREATE TABLE IF NOT EXISTS invoice_emails(
+				id INT NOT NULL AUTO_INCREMENT,
 				PRIMARY KEY(id),
 				email_subject VARCHAR(300),
 				email_description TEXT,
@@ -183,23 +183,19 @@ if (isset($_POST['submitandcreateafileformepleaseiamreadytoinstallyouradmintheme
 				email_sent_by varchar(200),
 				email_sent_on_date varchar (50),
 				cc_to_email TEXT,
-				original_pdf_link varchar(100))");
+				original_pdf_link varchar(100)) ENGINE=InnoDB DEFAULT CHARSET=utf8");
 
-            $sql = mysql_query("CREATE TABLE email_settings(
-				id INT NOT NULL AUTO_INCREMENT, 
+            $sql = $conn->exec("CREATE TABLE IF NOT EXISTS email_settings(
+				id INT NOT NULL AUTO_INCREMENT,
 				PRIMARY KEY(id),
 				invoice_emails_from_toggle VARCHAR(300),
 				config_company_emails_from VARCHAR(300),
-				invoice_email_from varchar(300))");
+				invoice_email_from varchar(300)) ENGINE=InnoDB DEFAULT CHARSET=utf8");
 
 
-            if ($sql) {
-                $success = '<h2>You got it !! </h2>Neccessary tables created <a href="#" id="create">Next</a>';
-            } else {
-                $error1 = '<b>Unable to create tables Make sure database name you entered does exists <br /> Delete the config.php file and follow the process again <input type="hidden" name="finish" value="finish" id="finish"/><input type="submit" name="click" value="Delete Now" id="click" onclick="fuck();" /></b>';
-            }
-        } else {
-            $error = "Unable to create file please do it manually by copying the entire code or <b>contact us</b> ";
+            $success = '<h2>You got it !! </h2>Neccessary tables created <a href="#" id="create">Next</a>';
+        } catch (PDOException $e) {
+            $error1 = '<b>Unable to create tables. Error: ' . htmlspecialchars($e->getMessage()) . '<br /> Delete the config.php file and follow the process again <input type="hidden" name="finish" value="finish" id="finish"/><input type="submit" name="click" value="Delete Now" id="click" onclick="deleteConfig();" /></b>';
         }
     } else {
         $error = 'Unable to make database connection, delete config.php and try again with right credentials';
@@ -219,8 +215,8 @@ if (isset($_POST['submitandcreateafileformepleaseiamreadytoinstallyouradmintheme
         <meta name="keywords" content="installation" />
 
         <link rel="stylesheet" href="stylesheets/home.css" />
-        <link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+        <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script type="text/javascript" src="js/custom.js"></script>	
         <script type="text/javascript">
             $(function() {

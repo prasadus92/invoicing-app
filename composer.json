@@ -1,0 +1,41 @@
+{
+    "name": "silverstone/invoice-maker",
+    "description": "A self-hosted PHP application for generating professional invoices in PDF format",
+    "type": "project",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Prasad U S",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
+        "ext-gd": "*",
+        "ext-mbstring": "*"
+    },
+    "suggest": {
+        "mpdf/mpdf": "For modern PDF generation (replaces bundled MPDF54)",
+        "phpmailer/phpmailer": "For modern email functionality (replaces bundled PHPMailer_5.2.1)",
+        "ext-openssl": "Required for SMTP authentication"
+    },
+    "autoload": {
+        "classmap": [
+            "core/"
+        ]
+    },
+    "config": {
+        "platform": {
+            "php": "7.4"
+        },
+        "optimize-autoloader": true
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@php -r \"chmod('uploads', 0777);\""
+        ]
+    },
+    "minimum-stability": "stable"
+}
